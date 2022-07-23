@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->integer('tipo')->unsigned();
+            $table->foreign('tipo')->references('id')->on('tipo_funcionario')->restrictOnDelete();
             $table->rememberToken();
             $table->timestamps();
         });
