@@ -23,3 +23,10 @@ Route::controller(AuthController::class)->group(function () {
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+Route::get('/funcionarios', [UserController::class, 'listarFuncionarios'])->name('listarFuncionarios');
+
+Route::get('/funcionario/editar/{id?}', [UserController::class, 'editarFuncionario'])->name('editarFuncionario');
+
+Route::get('/gerente/editar/{id?}', [GerenteController::class, 'editarGerente'])->name('editarGerente');
+Route::get('/gerentes', [GerenteController::class, 'listarGerentes'])->name('listarGerentes');
