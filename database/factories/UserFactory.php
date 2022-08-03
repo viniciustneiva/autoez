@@ -22,6 +22,14 @@ class UserFactory extends Factory
             'email' => fake()->safeEmail(),
             'email_verified_at' => now(),
             'tipo' => fake()->randomElement([1,2]),
+            'rua' => 'Praça Sete de Setembro',
+            'numero' => fake()->numerify(),
+            'bairro' => 'Centro',
+            'cidade' => 'Belo Horizonte',
+            'estado' => 'MG',
+            'telefone' => '35987654321',
+            'cep' => '30130010',
+            'data_nascimento' => fake()->date(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),
         ];

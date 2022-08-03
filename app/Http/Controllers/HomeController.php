@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use RafaelLaurindo\BrasilApi\BrasilApi;
 
 class HomeController extends Controller
 {
+
     /**
      * Create a new controller instance.
      *
@@ -25,4 +27,11 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
+    public function buscarCep(Request $request, BrasilApi $brasilApi) {
+        if($request->validate(['cep' => 'required|max:8'])){
+            return response()->json($brasilApi->cep($request->cep));
+        }
+    }
+
 }

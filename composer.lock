@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2c3fccbf29911339e61b67432f4a8f23",
+    "content-hash": "5f46aea56b16849480b9e824ebf85aa3",
     "packages": [
         {
             "name": "brick/math",
@@ -2665,6 +2665,83 @@
                 "source": "https://github.com/bobthecow/psysh/tree/v0.11.7"
             },
             "time": "2022-07-07T13:49:11+00:00"
+        },
+        {
+            "name": "rafaellaurindo/laravel-brasilapi",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rafaellaurindo/laravel-brasilapi.git",
+                "reference": "93a099814e8f8b13f3bc51192b9612fde05f798e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rafaellaurindo/laravel-brasilapi/zipball/93a099814e8f8b13f3bc51192b9612fde05f798e",
+                "reference": "93a099814e8f8b13f3bc51192b9612fde05f798e",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^7.4",
+                "laravel/framework": "^7.0 || ^8.0 || ^9.0",
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "brianium/paratest": "^6.3",
+                "friendsofphp/php-cs-fixer": "^3.2",
+                "nunomaduro/collision": "^5.10",
+                "orchestra/testbench": "^6.23",
+                "phpunit/phpunit": "^9.5"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "RafaelLaurindo\\BrasilApi\\BrasilApiServiceProvider"
+                    ],
+                    "aliases": {
+                        "BrasilApi": "RafaelLaurindo\\BrasilApi\\BrasilApiFacade"
+                    }
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/helpers.php"
+                ],
+                "psr-4": {
+                    "RafaelLaurindo\\BrasilApi\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rafael Laurindo",
+                    "email": "contato@rafaellaurindo.dev",
+                    "homepage": "https://github.com/rafaellaurindo"
+                }
+            ],
+            "description": "A Laravel package that provides a simple way to use the Brasil API endpoints",
+            "homepage": "https://github.com/rafaellaurindo/laravel-brasilapi",
+            "keywords": [
+                "BrasilApi",
+                "brasil",
+                "cep",
+                "laravel",
+                "rafaellaurindo"
+            ],
+            "support": {
+                "issues": "https://github.com/rafaellaurindo/laravel-brasilapi/issues",
+                "source": "https://github.com/rafaellaurindo/laravel-brasilapi/tree/v1.0.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/rafaellaurindo",
+                    "type": "github"
+                }
+            ],
+            "time": "2022-03-02T18:40:39+00:00"
         },
         {
             "name": "ralouphie/getallheaders",

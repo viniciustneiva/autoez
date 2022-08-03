@@ -5,9 +5,12 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Http\Client\RequestException;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use RafaelLaurindo\BrasilApi\BrasilApi;
 
 class User extends Authenticatable
 {
@@ -50,12 +53,10 @@ class User extends Authenticatable
     }
 
     public static function getFuncionarioId($id) {
+
         return self::select('users.id','users.name', 'users.email', 'users.tipo')
             ->where('id', $id)
             ->first();
     }
-
-
-
 
 }
