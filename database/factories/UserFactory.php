@@ -5,6 +5,7 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
+
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
  */
@@ -17,9 +18,11 @@ class UserFactory extends Factory
      */
     public function definition()
     {
+        $faker = \Faker\Factory::create('pt_BR');
         return [
             'name' => fake()->name(),
             'email' => fake()->safeEmail(),
+            'cpf' => $faker->cpf,
             'email_verified_at' => now(),
             'tipo' => fake()->randomElement([1,2]),
             'rua' => 'Praça Sete de Setembro',
@@ -27,8 +30,8 @@ class UserFactory extends Factory
             'bairro' => 'Centro',
             'cidade' => 'Belo Horizonte',
             'estado' => 'MG',
-            'telefone' => '35987654321',
-            'cep' => '30130010',
+            'telefone' => fake()->phoneNumber(),
+            'cep' => fake()->postcode(),
             'data_nascimento' => fake()->date(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),

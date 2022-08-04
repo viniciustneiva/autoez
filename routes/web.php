@@ -30,5 +30,10 @@ Route::get('/funcionario/editar/{id?}', [UserController::class, 'editarFuncionar
 
 Route::get('/gerente/editar/{id?}', [GerenteController::class, 'editarGerente'])->name('editarGerente');
 Route::get('/gerentes', [GerenteController::class, 'listarGerentes'])->name('listarGerentes');
+Route::post('/gerentes', [GerenteController::class, 'salvarGerente'])->name('salvarGerente');
 
 Route::post('/buscar-cep', [HomeController::class, 'buscarCep'])->name('buscarCep');
+
+Route::post('/buscar-funcionario', [UserController::class, 'buscarFuncionario'])->name('buscarFuncionario');
+
+Route::post('/buscar-funcionario-completo', [UserController::class, 'buscarFuncionarioLike'])->name('buscarFuncionarioLike');

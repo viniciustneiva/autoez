@@ -15,15 +15,22 @@ class GerenteController extends Controller
 
     public function listarGerentes() {
         $gerentes = Gerente::listarGerentes();
-        return view('admin.gerente.listar', ['gerentes' => $gerentes]);
+        return view('admin.users.gerente.listar', ['gerentes' => $gerentes]);
     }
 
     public function editarGerente($id = null) {
-        if($id) {
-            return view('admin.gerente.edit',
-                ['gerente' => Gerente::findOrFail($id)->first() || null]);
-        }else{
-            return view('admin.gerente.editar');
-        }
+        $gerente = $id != null ? User::whereId($id)->get() : null;
+
+        return view('admin.users.gerente.editar',
+                ['gerente' => $gerente]);
+
+    }
+
+    public function salvarGerente(Request $request) {
+        $validacao = isset($request->id) ? User::regrasValidacao($request->id) : User::regrasValidacao();
+        $resultado_validacao = $request->validate(User::regrasValidacao($validacao));
+        return Gerente::post($resultado_validacao) ? redirect('/gerentes')->with('message', "Operação realizada com sucesso!") :
+            redirect()->back()->withInput()->with('error_message', "Operação falhou!");
+
     }
 }

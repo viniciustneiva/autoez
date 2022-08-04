@@ -46,17 +46,43 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function regrasValidacao($id = null) {
+        $v_Rules = [
+            'name' => 'required',
+            'email' => 'required|email',
+            'cpf' => 'required',
+            'cep' => 'required',
+            'rua' => 'required',
+            'numero' => 'required|numeric',
+            'complemento' => 'nullable',
+            'bairro' => 'required',
+            'cidade' => 'required',
+            'estado' => 'required|max:2',
+            'telefone' => 'required',
+        ];
+        if($id) {
+            $v_Rules['id'] = 'required|exists:users,id';
+        }
+
+        return $v_Rules;
+    }
+
+    public function tipos() {
+        return $this->belongsTo(TipoFuncionario::class, 'tipo');
+    }
+
+
     public static function listarFuncionarios() {
-        return self::select('name', 'email', 'id')
-            ->where('tipo', TipoFuncionario::$Funcionario)
+        return self::where('tipo', TipoFuncionario::$Funcionario)
             ->get();
     }
 
     public static function getFuncionarioId($id) {
-
-        return self::select('users.id','users.name', 'users.email', 'users.tipo')
+        return self::select('users.*')
             ->where('id', $id)
             ->first();
     }
+
+
 
 }

@@ -17,15 +17,16 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('cpf', 14)->unique();
             $table->string('rua');
             $table->string('numero');
             $table->string('complemento')->nullable();
             $table->string('bairro');
             $table->string('cidade');
             $table->string('estado', 2);
-            $table->string('cep', 8);
+            $table->string('cep', 9);
             $table->date('data_nascimento');
-            $table->string('telefone', 11);
+            $table->string('telefone', 15);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->integer('tipo')->unsigned();

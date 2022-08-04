@@ -13,6 +13,7 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             'name' => 'Admin',
             'email' => 'teste@autoez.com.br',
+            'cpf' => '78042654090',
             'password' => bcrypt('12345678'),
             'tipo' => 1,
             'rua' => 'Avenida Principal',
