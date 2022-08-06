@@ -2,10 +2,11 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\TipoFuncionario;
 use Closure;
 use Illuminate\Http\Request;
 
-class gerente
+class Gerente
 {
     /**
      * Handle an incoming request.
@@ -16,6 +17,10 @@ class gerente
      */
     public function handle(Request $request, Closure $next)
     {
-        return $next($request);
+        if(TipoFuncionario::ehGerente()){
+            return $next($request);
+        }
+
+        return redirect('/');
     }
 }

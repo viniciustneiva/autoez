@@ -1,0 +1,43 @@
+<?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class StoreFuncionarioRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        return false;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, mixed>
+     */
+    public function rules()
+    {
+       return  [
+            'name' => 'required',
+            'email' => 'required|email',
+            'cpf' => 'required',
+            'cep' => 'required',
+            'rua' => 'required',
+            'numero' => 'required|numeric',
+            'complemento' => 'nullable',
+            'bairro' => 'required',
+            'cidade' => 'required',
+            'estado' => 'required|max:2',
+            'telefone' => 'required',
+            'data_nascimento' => 'required|date',
+            'password' => 'required|min:6|confirmed',
+        ];
+
+    }
+}

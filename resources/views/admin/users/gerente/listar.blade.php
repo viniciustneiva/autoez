@@ -48,7 +48,9 @@
                             @endforeach
                     </div>
                     @else
-                        <div class="list-group-item-primary">Não foram encontrados funcionários cadastrados.</div>
+                        <div class="card d-flex  my-2">
+                            <div class="list-group-item-primary rounded-0  p-2">Não foram encontrados clientes cadastrados.</div>
+                        </div>
                 </div>
                 @endif
                 </div>

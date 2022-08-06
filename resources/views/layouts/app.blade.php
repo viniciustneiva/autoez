@@ -10,7 +10,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/js/app.js'])
 
     {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
 
@@ -22,7 +22,9 @@
     {{-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
 </head>
 <body>
+@include('layouts.baseCSS')
     <div id="app">
+{{--        @include('messages.flash-message')--}}
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
@@ -55,11 +57,12 @@
 
                         @if(Auth::check() && Auth::user())
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Aluguéis</a>
+                                    <a class="nav-link" href="{{route('listarClientes')}}">Clientes</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Clientes</a>
+                                    <a class="nav-link" href="#">Aluguéis</a>
                                 </li>
+
                         @endif
                     </ul>
 

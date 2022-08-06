@@ -29,9 +29,10 @@ class HomeController extends Controller
     }
 
     public function buscarCep(Request $request, BrasilApi $brasilApi) {
-        if($request->validate(['cep' => 'required|max:8'])){
+        if($request->validate(['cep' => 'required|max:9'])){
             return response()->json($brasilApi->cep($request->cep));
         }
+
     }
 
 }

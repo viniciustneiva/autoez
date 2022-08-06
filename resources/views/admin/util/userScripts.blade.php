@@ -18,8 +18,7 @@
                     $("#bairro").val(response.neighborhood)
                     $("#cidade").val(response.city)
                     $("#estado").val(response.state)
-                    let $cep = $("#cep");
-                    $cep.mask('00000-000', {reverse: true});
+
                 },
                 error: function (response) {
                     console.log(response.responseJSON)
@@ -27,6 +26,8 @@
             });
 
         });
+
+
     });
 
 

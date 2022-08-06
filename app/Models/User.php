@@ -9,6 +9,7 @@ use Illuminate\Http\Client\RequestException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\HasApiTokens;
 use RafaelLaurindo\BrasilApi\BrasilApi;
 
@@ -22,9 +23,20 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
         'email',
+        'name',
+        'cpf',
+        'cep',
+        'rua',
+        'numero',
+        'complemento',
+        'bairro',
+        'cidade',
+        'estado',
+        'telefone',
+        'data_nascimento',
         'password',
+        'tipo'
     ];
 
     /**
@@ -37,6 +49,7 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    protected $guarded = ['password', 'remember_token'];
     /**
      * The attributes that should be cast.
      *
@@ -46,26 +59,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function regrasValidacao($id = null) {
-        $v_Rules = [
-            'name' => 'required',
-            'email' => 'required|email',
-            'cpf' => 'required',
-            'cep' => 'required',
-            'rua' => 'required',
-            'numero' => 'required|numeric',
-            'complemento' => 'nullable',
-            'bairro' => 'required',
-            'cidade' => 'required',
-            'estado' => 'required|max:2',
-            'telefone' => 'required',
-        ];
-        if($id) {
-            $v_Rules['id'] = 'required|exists:users,id';
-        }
-
-        return $v_Rules;
-    }
 
     public function tipos() {
         return $this->belongsTo(TipoFuncionario::class, 'tipo');
@@ -78,9 +71,21 @@ class User extends Authenticatable
     }
 
     public static function getFuncionarioId($id) {
-        return self::select('users.*')
-            ->where('id', $id)
+        return self::where('id', $id)
+            ->where('tipo', TipoFuncionario::$Funcionario)
             ->first();
+    }
+
+    public static function post($data) {
+        try {
+
+            DB::transaction(function () use ($data) {
+                self::updateOrCreate(['id' => $data['id'] ?? null], $data);
+            });
+            return true;
+        } catch (\Exception $v_Exception) {
+            return false;
+        }
     }
 
 
