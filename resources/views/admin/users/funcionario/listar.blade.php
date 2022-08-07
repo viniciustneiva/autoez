@@ -1,5 +1,14 @@
 @extends('layouts.app')
-
+<div class="modal-fullscreen d-none">
+    <div class="modal-wrapper">
+        <div class="modal-header justify-content-center mt-3"><h3>Apagar Funcionário</h3></div>
+        <div class="modal-body text-center mt-3">Deseja mesmo apagar este funcionário?</div>
+        <div class="modal-footer mt-3 justify-content-evenly">
+            <div class="btn btn-dark" id="close-modal">Não</div>
+            <a id="modalId" href="#"><div class="btn btn-danger">Sim</div></a>
+        </div>
+    </div>
+</div>
 @section('content')
     <div class="container">
         <div class="row py-3">
@@ -34,8 +43,8 @@
                     <div id="itensLista">
                         @if(count($funcionarios) > 0)
                             @foreach($funcionarios as $f)
-                                <div class="card d-flex  my-2">
-                                    <div id="funcionario_{{$f->id}}" class="rounded-0  p-2  d-flex justify-content-start flex-column">
+                                <div class="card d-flex my-2 flex-row justify-content-between pe-1">
+                                    <div class="rounded-0  p-2  d-flex justify-content-start flex-column col-lg-9">
                                         <div class="d-flex">
                                             <p class=" mb-1 mx-2">Nome: {{$f->name }}</p>
                                             <p class=" mb-1 mx-2">Email: {{$f->email }}</p>
@@ -43,6 +52,10 @@
 
                                         <p class=" mb-1 mx-2">Telefone: {{$f->telefone }}</p>
                                         <p class="mb-1 mx-2">{{ $f->rua . ", " . $f->numero . ", " . $f->bairro . ", " . $f->cidade . "-" . $f->estado . ", " . $f->cep }}</p>
+                                    </div>
+                                    <div class="d-flex justify-content-end align-items-center col-lg-3 position-relative">
+                                        <a href={{ route('editarFuncionario') . '/' . $f->id }}><div class="btn btn-outline-info botao-editar m-1"><i class="fa-solid fa-pen-to-square"></i></div></a>
+                                        <div class="btn btn-outline-danger botao-excluir m-1" usuario="{{$f->id}}" ><i class="fa-solid fa-trash"></i></div>
                                     </div>
                                 </div>
                             @endforeach
@@ -62,6 +75,17 @@
 
 @endsection
 @section('scripts')
+    <script>
+        $(".botao-excluir").click(function (e) {
+
+            let id = this.getAttribute('usuario');
+            console.log(id)
+            $(".modal-fullscreen").toggleClass('d-none');
+            let url = "{{ url('/deletar-funcionario') . '/'  }}";
+            document.getElementById('modalId').setAttribute('href', url + id);
+            //$("#modalId").attr('href').val();
+        });
+    </script>
     <script>
         $.typeahead({
             input: '.meuTypeahead',

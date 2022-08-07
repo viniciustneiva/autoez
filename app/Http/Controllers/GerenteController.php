@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cliente;
 use App\Models\Gerente;
 use App\Models\TipoFuncionario;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\EditFuncionarioRequest;
 use App\Http\Requests\StoreFuncionarioRequest;
+use Illuminate\Support\Facades\Auth;
 
 class GerenteController extends Controller {
 
@@ -39,6 +41,7 @@ class GerenteController extends Controller {
     }
 
     public function saveCreateGerente(StoreFuncionarioRequest $request) {
+
         Gerente::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -84,7 +87,7 @@ class GerenteController extends Controller {
             Gerente::where('id', $request->id)->update($request->except('_token', 'password_confirmation', 'password'));
         }
 
-        return redirect()->route('listarGerentes');
+        return redirect()->route('listarGerentes')->with('success', 'Operação realizada com sucesso!');
     }
 
     public function saveEditFuncionario(EditFuncionarioRequest $request) {
@@ -111,5 +114,38 @@ class GerenteController extends Controller {
         }
         return null;
     }
+
+    public function deletarGerente($id) {
+        $gerente = Gerente::find($id);
+
+        if($gerente && $gerente->id != Auth::id()){ // impedir que o gerente se delete
+            $gerente->delete();
+            return redirect(route('listarGerentes'))->with('success', 'Gerente removido com sucesso!');
+        }
+
+        return redirect(route('listarGerentes'))->with('error', 'Houve um erro ao deletar este Gerente');
+    }
+
+    public function deletarFuncionario($id) {
+        $funcionario = User::where('tipo', TipoFuncionario::$Funcionario)->find($id);
+
+        if($funcionario->delete()){
+            return redirect(route('listarFuncionarios'))->with('success', 'Funcionário removido com sucesso!');
+        }
+
+        return redirect(route('listarFuncionarios'))->with('error', 'Houve um erro ao deletar este Funcionário');
+    }
+
+    public function deletarCliente($id) {
+        $cliente = Cliente::find($id);
+
+        if($cliente->delete()){
+            return redirect(route('listarFuncionarios'))->with('success', 'Funcionário removido com sucesso!');
+        }
+
+        return redirect(route('listarFuncionarios'))->with('error', 'Houve um erro ao deletar este Funcionário');
+    }
+
+
 
 }

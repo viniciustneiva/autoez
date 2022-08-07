@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             TipoFuncionarioSeeder::class,
             UserSeeder::class,
+            MarcaSeeder::class,
         ]);
 
         User::factory()->count(10)->create();

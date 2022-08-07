@@ -47,6 +47,19 @@ Auth::routes();
         Route::post('/buscar-funcionario-completo', 'buscarFuncionarioLike')->name('buscarFuncionarioLike');
         Route::get('/gerente/editar/{id?}', 'editarGerente')->name('editarGerente');
         Route::get('/gerentes', 'listarGerentes')->name('listarGerentes');
+        Route::get('/deletar-gerente/{id}', 'deletarGerente')->name('deletarGerente');
+        Route::get('/deletar-funcionario/{id}', 'deletarFuncionario')->name('deletarFuncionario');
+        Route::get('/deletar-cliente/{id}', 'deletarCliente')->name('deletarCliente');
+    });
+
+    Route::controller(VeiculoController::class)->group(function () {
+        Route::get('/veiculos', 'listarVeiculos')->name('listarVeiculos');
+        Route::get('/veiculo/editar/{id?}', 'editarVeiculo')->name('editarVeiculo');
+        Route::post('/criar-veiculo',  'saveCreateVeiculo')->name('saveCreateVeiculo');
+        Route::post('/editar-veiculo',  'saveEditVeiculo')->name('saveEditVeiculo');
+        Route::post('/buscar-veiculo', 'buscarVeiculo')->name('buscarVeiculo');
+        Route::post('/buscar-veiculo-completo', 'buscarVeiculoLike')->name('buscarVeiculoLike');
+        Route::get('/deletar-veiculo/{id}', 'deletarVeiculo')->name('deletarVeiculo');
     });
 //Route::get('/home', [HomeController::class, 'index'])->name('home');
 //

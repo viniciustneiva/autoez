@@ -10,6 +10,8 @@
 {{-- FontAwesome --}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/js/all.min.js" integrity="sha512-8pHNiqTlsrRjVD4A/3va++W1sMbUHwWxxRPWNyVlql3T+Hgfd81Qc6FC5WMXDC+tSauxxzp1tgiAvSKFu1qIlA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+{{-- jQuery MaskMoney --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-maskmoney/3.0.2/jquery.maskMoney.min.js" integrity="sha512-Rdk63VC+1UYzGSgd3u2iadi0joUrcwX0IWp2rTh6KXFoAmgOjRS99Vynz1lJPT8dLjvo6JZOqpAHJyfCEZ5KoA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
     $(document).ready(function () {
@@ -19,7 +21,6 @@
         $cep.mask('00000-000', {reverse: true});
         $cpf.mask('000.000.000-00', {reverse: true});
         $telefone.mask('(00) 0 0000-0000');
-
         $(".showPassword").click(function (){
             let botao = $(".showPassword")
             let inputSenha = $("#password");
@@ -34,7 +35,51 @@
 
         })
 
+        $('input[name=placa]').mask('AAA 0U00', {
+            translation: {
+                'A': {
+                    pattern: /[A-Za-z]/
+                },
+                'U': {
+                    pattern: /[A-Za-z0-9]/
+                },
+            },
+            onKeyPress: function (value, e, field, options) {
+                // Convert to uppercase
+                e.currentTarget.value = value.toUpperCase();
+
+                // Get only valid characters
+                let val = value.replace(/[^\w]/g, '');
+
+                // Detect plate format
+                let isNumeric = !isNaN(parseFloat(val[4])) && isFinite(val[4]);
+                let mask = 'AAA 0U00';
+                if(val.length > 4 && isNumeric) {
+                    mask = 'AAA-0000';
+                }
+                $(field).mask(mask, options);
+            }
+        });
+
+
+
     });
+
+    $(function(){
+        $('#valor').maskMoney({prefix:'R$ ', allowNegative: false, thousands:'.', decimal:',', affixesStay: true});
+    })
+
+    $(".close.btn").click(function (e) {
+        $("#alert-message").toggleClass('d-none');
+    });
+
+    $('#close-modal').click(function () {
+       $('.modal-fullscreen').toggleClass('d-none');
+    });
+
+
+
+
 
 
 </script>

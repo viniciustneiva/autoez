@@ -1,6 +1,16 @@
 @extends('layouts.app')
-
+<div class="modal-fullscreen d-none">
+        <div class="modal-wrapper">
+            <div class="modal-header justify-content-center mt-3"><h3>Apagar Gerente</h3></div>
+            <div class="modal-body text-center mt-3">Deseja mesmo apagar este gerente?</div>
+            <div class="modal-footer mt-3 justify-content-evenly">
+                <div class="btn btn-dark" id="close-modal">Não</div>
+                <a id="modalId" href="#"><div class="btn btn-danger">Sim</div></a>
+            </div>
+        </div>
+</div>
 @section('content')
+
     <div class="container">
         <div class="row py-3">
             <div class="d-flex justify-content-end align-items-center">
@@ -34,8 +44,8 @@
                     <div id="itensLista">
                         @if(count($gerentes) > 0)
                             @foreach($gerentes as $g)
-                                <div class="card d-flex  my-2">
-                                    <div id="funcionario_{{$g->id}}" class="rounded-0  p-2  d-flex justify-content-start flex-column">
+                                <div class="card d-flex my-2 flex-row justify-content-between pe-1">
+                                    <div class="rounded-0  p-2  d-flex justify-content-start flex-column col-lg-9">
                                         <div class="d-flex">
                                             <p class=" mb-1 mx-2">Nome: {{$g->name }}</p>
                                             <p class=" mb-1 mx-2">Email: {{$g->email }}</p>
@@ -44,12 +54,16 @@
                                         <p class=" mb-1 mx-2">Telefone: {{$g->telefone }}</p>
                                         <p class="mb-1 mx-2">{{ $g->rua . ", " . $g->numero . ", " . $g->bairro . ", " . $g->cidade . "-" . $g->estado . ", " . $g->cep }}</p>
                                     </div>
+                                    <div class="d-flex justify-content-end align-items-center col-lg-3 position-relative">
+                                        <a href={{ route('editarGerente') . '/' . $g->id }}><div class="btn btn-outline-info botao-editar m-1"><i class="fa-solid fa-pen-to-square"></i></div></a>
+                                        <div class="btn btn-outline-danger botao-excluir m-1" usuario="{{$g->id}}" ><i class="fa-solid fa-trash"></i></div>
+                                    </div>
                                 </div>
                             @endforeach
                     </div>
                     @else
                         <div class="card d-flex  my-2">
-                            <div class="list-group-item-primary rounded-0  p-2">Não foram encontrados clientes cadastrados.</div>
+                            <div class="list-group-item-primary rounded-0  p-2">Não foram encontrados gerentes cadastrados.</div>
                         </div>
                 </div>
                 @endif
@@ -57,8 +71,21 @@
             </div>
         </div>
     </div>
+
 @endsection
 @section('scripts')
+    <script>
+        $(".botao-excluir").click(function (e) {
+
+            let id = this.getAttribute('usuario');
+            console.log(id)
+            $(".modal-fullscreen").toggleClass('d-none');
+            let url = "{{ url('/deletar-gerente') . '/'  }}";
+            document.getElementById('modalId').setAttribute('href', url + id);
+            //$("#modalId").attr('href').val();
+        });
+    </script>
+
     <script>
         $.typeahead({
             input: '.meuTypeahead',
@@ -102,14 +129,18 @@
         success: function (response) {
         $("#itensLista").html('')
         for(let r of response){
-        let novoHtml = '<div class="card d-flex my-2">\
-            <div id="funcionario_'+r.id+'" class="rounded-0 p-2 d-flex justify-content-start flex-column">\
+        let novoHtml = '<div class="card d-flex my-2 flex-row justify-content-between pe-1">\
+            <div id="funcionario_'+r.id+'" class="rounded-0 p-2 d-flex justify-content-start flex-column col-lg-9">\
                 <div class="d-flex">\
                     <p class=" mb-1 mx-2">Nome: '+r.name+'</p>\
                     <p class=" mb-1 mx-2">Email: '+r.email+'</p>\
                 </div>\
                 <p class=" mb-1 mx-2">Telefone: '+r.telefone+'</p>\
                 <p class="mb-1 mx-2">'+r.rua+', '+r.numero+', '+r.bairro+', '+r.cidade+', '+r.cidade+'-'+r.estado+', '+r.cep+'</p>\
+            </div>\
+            <div class="d-flex justify-content-end align-items-center col-lg-3">\
+                <a href={{ route('editarFuncionario') . '/' }}'+r.id+'><div class="btn btn-outline-info botao-editar m-1"><i class="fa-solid fa-pen-to-square"></i></div></a>\
+                <div class="btn botao-excluir btn-info m-1"><i class="fa-solid fa-trash"></i></div>\
             </div>\
         </div>';
         $("#itensLista").append(novoHtml)
