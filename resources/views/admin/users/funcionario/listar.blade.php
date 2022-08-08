@@ -1,14 +1,5 @@
 @extends('layouts.app')
-<div class="modal-fullscreen d-none">
-    <div class="modal-wrapper">
-        <div class="modal-header justify-content-center mt-3"><h3>Apagar Funcionário</h3></div>
-        <div class="modal-body text-center mt-3">Deseja mesmo apagar este funcionário?</div>
-        <div class="modal-footer mt-3 justify-content-evenly">
-            <div class="btn btn-dark" id="close-modal">Não</div>
-            <a id="modalId" href="#"><div class="btn btn-danger">Sim</div></a>
-        </div>
-    </div>
-</div>
+
 @section('content')
     <div class="container">
         <div class="row py-3">
@@ -53,9 +44,13 @@
                                         <p class=" mb-1 mx-2">Telefone: {{$f->telefone }}</p>
                                         <p class="mb-1 mx-2">{{ $f->rua . ", " . $f->numero . ", " . $f->bairro . ", " . $f->cidade . "-" . $f->estado . ", " . $f->cep }}</p>
                                     </div>
-                                    <div class="d-flex justify-content-end align-items-center col-lg-3 position-relative">
-                                        <a href={{ route('editarFuncionario') . '/' . $f->id }}><div class="btn btn-outline-info botao-editar m-1"><i class="fa-solid fa-pen-to-square"></i></div></a>
-                                        <div class="btn btn-outline-danger botao-excluir m-1" usuario="{{$f->id}}" ><i class="fa-solid fa-trash"></i></div>
+                                    <div class="d-flex flex-column justify-content-center align-items-center position-relative" style="width: 100%;">
+                                        <h4 class="text-center">Ações</h4>
+                                        <div class="d-flex flex-row justify-content-center align-items-center" style="width: 100%;">
+                                            <a href={{ route('editarFuncionario') . '/' . $f->id }}><div class="btn btn-outline-info botao-editar m-1"><i class="fa-solid fa-pen-to-square"></i></div></a>
+                                                <div class="btn btn-outline-danger botao-excluir m-1" usuario="{{$f->id}}" ><i class="fa-solid fa-trash"></i></div>
+                                        </div>
+
                                     </div>
                                 </div>
                             @endforeach
@@ -80,7 +75,7 @@
 
             let id = this.getAttribute('usuario');
             console.log(id)
-            $(".modal-fullscreen").toggleClass('d-none');
+            $(".modal-fullscreen").toggleClass('oculto');
             let url = "{{ url('/deletar-funcionario') . '/'  }}";
             document.getElementById('modalId').setAttribute('href', url + id);
             //$("#modalId").attr('href').val();

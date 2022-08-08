@@ -1,17 +1,20 @@
+
 @extends('layouts.app')
+
+
 
 @section('content')
     <div class="container">
         <div class="row py-3">
             <div class="d-flex justify-content-end align-items-center">
-                <a href="{{route('editarVeiculo')}}"><button class="btn btn-primary">Adicionar Veículo</button></a>
+                <a href="{{route('editarMarca')}}"><button class="btn btn-primary">Adicionar Marca</button></a>
             </div>
         </div>
     </div>
     <div class="container">
         <div class="row justify-content-center">
             <div class="card">
-                <div class="card-header">Lista de Veículos</div>
+                <div class="card-header">Lista de Marcas</div>
 
                 <div class="card-body">
                     <div class="d-flex my-2">
@@ -19,7 +22,7 @@
                             <div class="typeahead__container">
                                 <div class="typeahead__field">
                                     <div class="typeahead__query">
-                                        <input class="meuTypeahead" name="placa" placeholder="Buscar" autocomplete="off">
+                                        <input class="meuTypeahead" name="marcas" placeholder="Buscar" autocomplete="off">
                                     </div>
                                     <div class="typeahead__button">
                                         <button type="submit">
@@ -29,31 +32,27 @@
                                 </div>
                             </div>
                         </form>
-                        {{--                        <input type="text" id="typeahead" class="typeahead__ typeahead meuTypeAhead">--}}
                     </div>
                     <div id="itensLista">
-                        @if(count($veiculos) > 0)
-                            @foreach($veiculos as $v)
+                        @if(count($marcas) > 0)
+                            @foreach($marcas as $m)
                                 <div class="card d-flex my-2 flex-row justify-content-between pe-1">
                                     <div class="rounded-0  p-2  d-flex justify-content-start flex-column col-lg-9">
                                         <div class="d-flex">
-                                            <p class=" mb-1 mx-2">Placa: {{$v->placa }}</p>
-                                            <p class=" mb-1 mx-2">Marca: {{$v->marca->name }}</p>
-                                            <p class=" mb-1 mx-2">Modelo: {{$v->modelo }}</p>
+                                            <p class=" mb-1 mx-2">Marca: {{$m->name }}</p>
 
                                         </div>
-                                        <p class=" mb-1 mx-2">Cor: {{$v->cor }}</p>
-                                        <p class=" mb-1 mx-2">Ano: {{$v->ano }}</p>
-                                        <p class=" mb-1 mx-2">Valor: {{$v->valor }}</p>
-                                        <p class=" mb-1 mx-2">Disponível: {{ $v->disponivel ? 'Sim' : 'Não' }}</p>
+                                        @if(\App\Models\TipoFuncionario::ehGerente())
+                                            <p class=" mb-1 mx-2">Taxa: {{$m->taxa*100 . '%' }}</p>
+                                        @endif
                                     </div>
 
                                     <div class="d-flex flex-column justify-content-center align-items-center position-relative" style="width: 100%;">
                                         <h4 class="text-center">Ações</h4>
                                         <div class="d-flex flex-row justify-content-center align-items-center" style="width: 100%;">
-                                            <a href={{ route('editarVeiculo') . '/' . $v->id }}><div class="btn btn-outline-info botao-editar m-1"><i class="fa-solid fa-pen-to-square"></i></div></a>
+                                            <a href={{ route('editarMarca') . '/' . $m->id }}><div class="btn btn-outline-info botao-editar m-1"><i class="fa-solid fa-pen-to-square"></i></div></a>
                                             @if(\App\Models\TipoFuncionario::ehGerente())
-                                                <div class="btn btn-outline-danger botao-excluir m-1" usuario="{{$v->id}}" ><i class="fa-solid fa-trash"></i></div>
+                                                <div class="btn btn-outline-danger botao-excluir m-1" usuario="{{$m->id}}" ><i class="fa-solid fa-trash"></i></div>
                                             @endif
                                         </div>
 
@@ -63,7 +62,7 @@
                     </div>
                     @else
                         <div class="card d-flex  my-2">
-                            <div class="list-group-item-primary rounded-0  p-2">Não foram encontrados veículos cadastrados.</div>
+                            <div class="list-group-item-primary rounded-0  p-2">Não foram encontrados marcas cadastradas.</div>
                         </div>
                 </div>
                 @endif
@@ -73,17 +72,19 @@
     </div>
 @endsection
 @section('scripts')
-    <script>
-        $(".botao-excluir").click(function (e) {
+    @if(\App\Models\TipoFuncionario::ehGerente())
+        <script>
+            $(".botao-excluir").click(function (e) {
 
-            let id = this.getAttribute('usuario');
-            console.log(id)
-            $(".modal-fullscreen").toggleClass('oculto');
-            let url = "{{ url('/deletar-veiculo') . '/'  }}";
-            document.getElementById('modalId').setAttribute('href', url + id);
-            //$("#modalId").attr('href').val();
-        });
-    </script>
+                let id = this.getAttribute('usuario');
+                console.log(id)
+                $(".modal-fullscreen").toggleClass('oculto');
+                let url = "{{ url('/deletar-marca') . '/'  }}";
+                document.getElementById('modalId').setAttribute('href', url + id);
+                //$("#modalId").attr('href').val();
+            });
+        </script>
+    @endif
     <script>
         $.typeahead({
             input: '.meuTypeahead',
@@ -92,22 +93,22 @@
             offset: true,
             source: {
                 data: [
-                    @foreach($veiculos as $v)
-                        "{!! $v->placa!!}",
+                    @foreach($marcas as $m)
+                        "{!! $m->name!!}",
                     @endforeach
                 ]
             },
             callback: {
                 onClick: function (node, a, item, event) {
                     $.ajax({
-                        url: '{{route('buscarVeiculo')}}',
-                        data: {'placa': item.display, _token: '{{ csrf_token() }}'},
+                        url: '{{route('buscarMarca')}}',
+                        data: {'name': item.display, _token: '{{ csrf_token() }}'},
                         type: 'POST',
                         datatype: 'JSON',
                         success: function (response) {
-                            console.log(response.placa)
+                            console.log(response.tipo)
 
-                            window.location.href = "{{ route('editarVeiculo') }}" + '/' + response.id;
+                            window.location.href = "{{ route('editarMarca') }}" + '/' + response.id;
 
                         },
                         error: function (response) {
@@ -120,37 +121,37 @@
                     event.preventDefault()
 
                     $.ajax({
-                        url: '{{route('buscarVeiculoLike')}}',
-                        data: {'placa': $(".meuTypeahead").val(), _token: '{{ csrf_token() }}'},
+                        url: '{{route('buscarMarcaLike')}}',
+                        data: {'name': $(".meuTypeahead").val(), _token: '{{ csrf_token() }}'},
                         type: 'POST',
                         datatype: 'JSON',
                         success: function (response) {
                             $("#itensLista").html('')
                             for(let r of response){
+
+                                @if(\App\Models\TipoFuncionario::ehGerente())
+                                    r.taxa = '<p class=" mb-1 mx-2">Taxa:'+Math.ceil(r.taxa*100)+'%</p>';
+                                    r.botao = '<div class="btn btn-outline-danger botao-excluir m-1" usuario="'+r.id+'" ><i class="fa-solid fa-trash"></i></div>';
+                                @else
+                                    r.botao = '';
+                                @endif
+
                                 let novoHtml = '<div class="card d-flex my-2 flex-row justify-content-between pe-1">\
                                     <div class="rounded-0  p-2  d-flex justify-content-start flex-column col-lg-9">\
+                                    <p class=" mb-1 mx-2">Marca: ' +r.name+' </p>\
                                     <div class="d-flex">\
-                                    <p class=" mb-1 mx-2">Marca: '+r.marca.name+' </p>\
-                                <p class=" mb-1 mx-2">Modelo: '+r.modelo+' </p>\
-                                <p class=" mb-1 mx-2">Cor: '+r.cor+'</p>\
-                            </div>\
-                                <p class=" mb-1 mx-2">Ano: '+r.ano+'</p>\
-                                <p class=" mb-1 mx-2">Valor: '+r.valor+'</p>\
-                                <p class=" mb-1 mx-2">Disponível ? '+r.disponivel+'</p>\
-                            </div>\
-                            <div class="d-flex justify-content-end align-items-center col-lg-3 position-relative">\
-                                    @if(\App\Models\TipoFuncionario::ehGerente())
-                                    <a href={{ route('editarVeiculo') . '/' }}'+r.id+'><div class="btn btn-outline-info botao-editar m-1"><i class="fa-solid fa-pen-to-square"></i></div></a>\
-                                <div class="btn btn-outline-danger botao-excluir m-1" usuario="'+r.id+'" ><i class="fa-solid fa-trash"></i></div>\
-                                @endif
-                            </div>\
+                                    '+r.taxa+'\
+                                    </div>\
+                                    </div>\
+                                <div class="d-flex flex-column justify-content-center align-items-center position-relative" style="width: 100%;">\
+                                    <h4 class="text-center">Ações</h4>\
+                                    <div class="d-flex flex-row justify-content-center align-items-center" style="width: 100%;">\
+                                        <a href="/marcas/editar/'+r.id+'"><div class="btn btn-outline-info botao-editar m-1"><i class="fa-solid fa-pen-to-square"></i></div></a>'+r.botao+'\
+                                    </div>\
+                                </div>\
                             </div>';
                                 $("#itensLista").append(novoHtml)
                             }
-                            //console.log(response)
-
-
-
                         },
                         error: function (response) {
                             console.log(response)

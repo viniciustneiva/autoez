@@ -12,6 +12,7 @@
         "laravel/tinker": "^2.7",
         "laravel/ui": "^3.4",
         "laravelcollective/html": "^6.3",
+        "nesbot/carbon": "^2.61",
         "rafaellaurindo/laravel-brasilapi": "^1.0"
     },
     "require-dev": {

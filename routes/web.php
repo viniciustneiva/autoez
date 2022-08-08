@@ -50,6 +50,8 @@ Auth::routes();
         Route::get('/deletar-gerente/{id}', 'deletarGerente')->name('deletarGerente');
         Route::get('/deletar-funcionario/{id}', 'deletarFuncionario')->name('deletarFuncionario');
         Route::get('/deletar-cliente/{id}', 'deletarCliente')->name('deletarCliente');
+        Route::get('/relatorio-cliente', 'gerarRelatorioCliente')->name('gerarRelatorioCliente');
+        Route::get('/relatorio-veiculo', 'gerarRelatorioVeiculo')->name('gerarRelatorioVeiculo');
     });
 
     Route::controller(VeiculoController::class)->group(function () {
@@ -61,6 +63,29 @@ Auth::routes();
         Route::post('/buscar-veiculo-completo', 'buscarVeiculoLike')->name('buscarVeiculoLike');
         Route::get('/deletar-veiculo/{id}', 'deletarVeiculo')->name('deletarVeiculo');
     });
+
+    Route::controller(MarcaController::class)->group(function () {
+        Route::get('/marcas', 'listarMarcas')->name('listarMarcas');
+        Route::get('/marcas/editar/{id?}', 'editarMarca')->name('editarMarca');
+        Route::post('/criar-marca',  'saveCreateMarca')->name('saveCreateMarca');
+        Route::post('/editar-marca',  'saveEditMarca')->name('saveEditMarca');
+        Route::post('/buscar-marca', 'buscarMarca')->name('buscarMarca');
+        Route::post('/buscar-marca-completo', 'buscarMarcaLike')->name('buscarMarcaLike');
+        Route::get('/deletar-marca/{id}', 'deletarMarca')->name('deletarMarca');
+    });
+
+    Route::controller(AluguelController::class)->group(function () {
+        Route::get('/alugueis', 'listarAlugueis')->name('listarAlugueis');
+        Route::get('/aluguel/editar/{id?}', 'editarAluguel')->name('editarAluguel');
+        Route::post('/criar-aluguel',  'saveCreateAluguel')->name('saveCreateAluguel');
+        Route::post('/editar-aluguel',  'saveEditAluguel')->name('saveEditAluguel');
+        Route::post('/buscar-aluguel', 'buscarAluguel')->name('buscarAluguel');
+        Route::post('/buscar-aluguel-completo', 'buscarAluguelLike')->name('buscarAluguelLike');
+        Route::get('/deletar-aluguel/{id}', 'deletarAluguel')->name('deletarAluguel');
+        Route::get('/relatorio-aluguel', 'gerarRelatorioAluguel')->name('gerarRelatorioAluguel');
+    });
+
+
 //Route::get('/home', [HomeController::class, 'index'])->name('home');
 //
 //Route::get('/funcionarios', [UserController::class, 'listarFuncionarios'])->name('listarFuncionarios');

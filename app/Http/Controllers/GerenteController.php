@@ -6,6 +6,7 @@ use App\Models\Cliente;
 use App\Models\Gerente;
 use App\Models\TipoFuncionario;
 use App\Models\User;
+use App\Models\Veiculo;
 use Illuminate\Http\Request;
 use App\Http\Requests\EditFuncionarioRequest;
 use App\Http\Requests\StoreFuncionarioRequest;
@@ -146,6 +147,13 @@ class GerenteController extends Controller {
         return redirect(route('listarFuncionarios'))->with('error', 'Houve um erro ao deletar este Funcionário');
     }
 
+    public function gerarRelatorioCliente() {
+        return view('admin.relatorio.listarCliente', ['clientes' => Cliente::gerarRelatorio()]);
+    }
+
+    public function gerarRelatorioVeiculo() {
+        return view('admin.relatorio.listarVeiculo', ['veiculos' => Veiculo::gerarRelatorioVeiculo()]);
+    }
 
 
 }

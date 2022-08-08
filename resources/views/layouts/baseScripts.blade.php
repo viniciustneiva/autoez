@@ -74,7 +74,7 @@
     });
 
     $('#close-modal').click(function () {
-       $('.modal-fullscreen').toggleClass('d-none');
+       $('.modal-fullscreen').toggleClass('oculto');
     });
 
 

@@ -1,4 +1,5 @@
 <style>
+
     .showPassword {
         position: absolute;
         right: 20px;
@@ -17,12 +18,12 @@
     .modal-wrapper {
         position: absolute;
         left: 0;
-        top: 25%;
+        top: 30%;
         right: 0;
         bottom: 0;
         background: #fff;
-        width: 50%;
-        height: 30vh;
+        width: 450px;
+        height: 215px;
         margin: 0 auto;
     }
 

@@ -25,6 +25,23 @@
 @include('layouts.baseCSS')
     <div id="app">
         @include('messages.flash-message')
+        @if(\App\Models\TipoFuncionario::ehGerente())
+            <style>
+                .oculto {
+                    display: none;
+                }
+            </style>
+            <div class="modal-fullscreen oculto">
+                <div class="modal-wrapper">
+                    <div class="modal-header justify-content-center mt-3"><h3>Apagar item</h3></div>
+                    <div class="modal-body text-center mt-3">Deseja mesmo apagar este item?</div>
+                    <div class="modal-footer mt-3 justify-content-evenly">
+                        <div class="btn btn-dark" id="close-modal">Não</div>
+                        <a id="modalId" href="#"><div class="btn btn-danger">Sim</div></a>
+                    </div>
+                </div>
+            </div>
+        @endif
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">

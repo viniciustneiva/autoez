@@ -61,7 +61,11 @@
                             </div>
                             <div class="form-group col-md-3 px-2">
                                 <label for="estado" class="form-label mb-0">Estado</label>
-                                <input type="text" class="form-control form-text mt-1" id="estado" name="estado" placeholder="Estado" value="{{ optional($cliente)->estado }}" required>
+                                <select name="estado" id="estado" class="form-select">
+                                    @foreach(\App\Models\Estado::getEstados() as $estado)
+                                        <option {{(optional($cliente)->estado == $estado) ? 'selected' : ''}} value="{{$estado}}">{{$estado}}</option>
+                                    @endforeach
+                                </select>
                             </div>
 
                         </div>
@@ -72,7 +76,6 @@
                                 <label for="telefone" class="form-label mb-0">Telefone</label>
                                 <input type="text" class="form-control form-text mt-1 " id="telefone" name="telefone" placeholder="(00) 0 0000-0000" value="{{ optional($cliente)->telefone }}" required>
                             </div>
-
 
                         </div>
 
