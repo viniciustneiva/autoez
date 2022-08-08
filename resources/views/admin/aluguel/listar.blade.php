@@ -37,10 +37,10 @@
                             @foreach($alugueis as $a)
                                 <div class="card d-flex my-2 flex-row justify-content-between pe-1">
                                     <div class="rounded-0  p-2  d-flex justify-content-start flex-column col-lg-12">
-                                        <div class="d-flex card p-2">
+                                        <div class="d-flex card p-2" style="background: #f2f2f2">
                                             <div class="d-flex flex-row col-lg-12">
                                                 <div class="d-flex ps-0 ms-0 p-2 m-2 flex-row col-lg-9">
-                                                    <div class="d-flex card m-2 p-2 flex-column col-lg-6">
+                                                    <div class="d-flex card m-2 p-2 flex-column col-lg-6" style="background: #f3d3d3">
                                                         <h4 class=" mb-1 mx-2">Aluguel</h4>
                                                         <p class=" mb-1 mx-2">Data do empréstimo: {{date('d/m/Y', strtotime($a->data_emprestimo)) }}</p>
                                                         <p class=" mb-1 mx-2">Prazo máximo: {{date('d/m/Y', strtotime($a->prazo)) }}</p>
@@ -49,7 +49,7 @@
                                                             <p class="mb-1 mx-2">Data da Entrega: {{date('d/m/Y', strtotime($a->data_entrega)) }}</p>
                                                         @endif
                                                     </div>
-                                                    <div class="d-flex card m-2 p-2 col-lg-6">
+                                                    <div class="d-flex card m-2 p-2 col-lg-6" style="background: #ffffc4">
                                                         <h5 class=" mb-1 mx-2">Balanço</h5>
                                                         <p class="mb-1 mx-2">Dias utilizados: {{ $a->dias_utilizados ? $a->dias_utilizados : round(abs(strtotime('now') - strtotime($a->data_emprestimo))/ (60 * 60 * 24)) }}</p>
                                                         <p class="mb-1 mx-2">Valor da diária: R$ {{ ceil($a->diaria/10) }}</p>
@@ -67,21 +67,21 @@
                                             </div>
 
                                             <div class="d-flex  flex-row justify-content-between">
-                                                <div class="d-flex card p-2 m-2 " style="width: 33%">
-                                                    <h5 class=" mb-1 mx-2">Cliente</h5>
+                                                <div class="d-flex card p-2 m-2 " style="width: 33%;background: #c7e5ff;">
+                                                    <h5 class=" mb-1 mx-2" >Cliente</h5>
                                                     <p class=" mb-1 mx-2">Nome: {{$a->cliente->name }}</p>
                                                     <p class=" mb-1 mx-2">Email: {{$a->cliente->email }}</p>
                                                     <p class=" mb-1 mx-2">Telefone: {{$a->cliente->telefone }}</p>
                                                     <p class="mb-1 mx-2">Endereço: {{ $a->cliente->rua . ", " . $a->cliente->numero . ", " . $a->cliente->bairro  }} <br> {{ $a->cliente->cidade . "-" . $a->cliente->estado . ", " . $a->cliente->cep}}</p>
                                                 </div>
-                                                <div class="d-flex card p-2 m-2" style="width: 33%">
+                                                <div class="d-flex card p-2 m-2" style="width: 33%; background: #cdffcd;">
                                                     <h5 class=" mb-1 mx-2">Veículo</h5>
                                                     <p class=" mb-1 mx-2">Veículo: {{$a->veiculo->marca->name . ' ' . $a->veiculo->modelo }}</p>
                                                     <p class=" mb-1 mx-2">Placa: {{$a->veiculo->placa }}</p>
                                                     <p class=" mb-1 mx-2">Ano: {{$a->veiculo->ano }}</p>
                                                     <p class=" mb-1 mx-2">Cor: {{$a->veiculo->cor }}</p>
                                                 </div>
-                                                <div class="d-flex card p-2 my-2" style="width: 33%">
+                                                <div class="d-flex card p-2 my-2" style="width: 33%; background: #c3c9cf;">
                                                     <h5 class=" mb-1 mx-2">Funcionário</h5>
                                                     <p class=" mb-1 mx-2">Nome: {{$a->funcionario->name }}</p>
                                                     <p class=" mb-1 mx-2">Email: {{$a->funcionario->email }}</p>
@@ -101,11 +101,11 @@
             </div>
         </div>
     </div>
-    </div>
+
 @endsection
 @section('scripts')
     <script>
-        $(".botao-excluir").click(function (e) {
+        $(".botao-excluir").click(function () {
 
             let id = this.getAttribute('usuario');
             console.log(id)
@@ -129,7 +129,7 @@
                 ]
             },
             callback: {
-                onClick: function (node, a, item, event) {
+                onClick: function (node, a, item) {
                     $.ajax({
                         url: '{{route('buscarAluguel')}}',
                         data: {'name': item.display, _token: '{{ csrf_token() }}'},
@@ -165,17 +165,17 @@
 
                                 let novoHtml = '<div class="card d-flex my-2 flex-row justify-content-between pe-1">\
                                     <div class="rounded-0  p-2  d-flex justify-content-start flex-column col-lg-12">\
-                                    <div class="d-flex card p-2">\
+                                    <div class="d-flex card p-2" style="background: #f2f2f2">\
                                     <div class="d-flex flex-row col-lg-12">\
                                     <div class="d-flex ps-0 ms-0 p-2 m-2 flex-row col-lg-9">\
                                     <div class="d-flex card m-2 p-2 flex-column col-lg-6">\
-                                    <h4 class=" mb-1 mx-2">Aluguel</h4>\
+                                    <h4 class=" mb-1 mx-2" style="background: #f3d3d3">Aluguel</h4>\
                                 <p class=" mb-1 mx-2">Data do empréstimo: '+r.data_emprestimo.split('-').reverse().join('/')+'</p>\
                                 <p class=" mb-1 mx-2">Prazo máximo: '+r.prazo.split('-').reverse().join('/')+'</p>\
                                 <p class=" mb-1 mx-2">Entregue: '+r.entregue +'</p>\
                                 <p class="mb-1 mx-2">Data da Entrega: '+r.data_entrega+'</p>\
                             </div>\
-                                <div class="d-flex card m-2 p-2 col-lg-6">\
+                                <div class="d-flex card m-2 p-2 col-lg-6" style="background: #ffffc4">\
                                     <h5 class=" mb-1 mx-2">Balanço</h5>\
                                     <p class="mb-1 mx-2">Dias utilizados: '+r.dias_utilizados+'</p>\
                                     <p class="mb-1 mx-2">Valor da diária: R$ '+Math.ceil(r.diaria/10)+'</p>\
@@ -191,21 +191,21 @@
                                 </div>\
                             </div>\
                                 <div class="d-flex  flex-row justify-content-between">\
-                                    <div class="d-flex card p-2 m-2 " style="width: 33%">\
+                                    <div class="d-flex card p-2 m-2 " style="width: 33%;background: #c7e5ff">\
                                         <h5 class=" mb-1 mx-2">Cliente</h5>\
                                         <p class=" mb-1 mx-2">Nome: '+r.cliente.name+'</p>\
                                         <p class=" mb-1 mx-2">Email: '+ r.cliente.email +'</p>\
                                         <p class=" mb-1 mx-2">Telefone: '+r.cliente.telefone +'</p>\
                                         <p class="mb-1 mx-2">Endereço: '+ r.cliente.rua + ", " + r.cliente.numero +", " + r.cliente.bairro  +' <br> '+ r.cliente.cidade + "-" + r.cliente.estado + ", " + r.cliente.cep +' </p>\
                                     </div>\
-                                    <div class="d-flex card p-2 m-2" style="width: 33%">\
+                                    <div class="d-flex card p-2 m-2" style="width: 33%; background: #cdffcd">\
                                         <h5 class=" mb-1 mx-2">Veículo</h5>\
                                         <p class=" mb-1 mx-2">Veículo: '+ r.marca_carro + ' ' + r.veiculo.modelo +'</p>\
                                         <p class=" mb-1 mx-2">Placa: '+ r.veiculo.placa +'</p>\
                                         <p class=" mb-1 mx-2">Ano: '+ r.veiculo.ano +'</p>\
                                         <p class=" mb-1 mx-2">Cor: '+ r.veiculo.cor +'</p>\
                                     </div>\
-                                    <div class="d-flex card p-2 my-2" style="width: 33%">\
+                                    <div class="d-flex card p-2 my-2" style="width: 33%; background: #c3c9cf">\
                                         <h5 class=" mb-1 mx-2">Funcionário</h5>\
                                         <p class=" mb-1 mx-2">Nome: '+ r.funcionario.name +'</p>\
                                         <p class=" mb-1 mx-2">Email: '+ r.funcionario.email +'</p>\
