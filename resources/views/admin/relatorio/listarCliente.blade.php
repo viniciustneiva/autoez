@@ -30,7 +30,7 @@
                     <th scope="row">{{$loop->iteration}}</th>
                     <td>{{$al->name}}</td>
                     <td>{{$al->email}}</td>
-                    <td>{{$al->data_nascimento}}</td>
+                    <td>{{date('d/m/Y', strtotime($al->data_nascimento))}}</td>
                     <td>{{$al->telefone}}</td>
                     <td>{{$al->cpf}}</td>
                     <td>{{$al->endereco}}</td>
