@@ -40,15 +40,8 @@ class Cliente extends Model
     }
 
     public static function gerarRelatorio() {
-        return self::join('aluguel', 'aluguel.cliente_id', '=', 'cliente.id')
-            ->join('veiculo', 'veiculo.id', '=', 'aluguel.veiculo_id')
-            ->join('marca', 'marca.id', '=', 'veiculo.marca_id')
-            ->orderBy('cliente.updated_at')
-            ->selectRaw('cliente.*, aluguel.*, veiculo.*, marca.name as marca_carro,
-             ROUND(CONVERT(REPLACE(REPLACE(veiculo.valor, "R$", ""), ".", ""), DECIMAL),2) as valor_extenso,
-              DATEDIFF(aluguel.data_entrega, aluguel.data_emprestimo) as dias_utilizados,
-               marca.taxa as taxa_marca,
-               CEIL(REPLACE(REPLACE(veiculo.valor, "R$", ""), "." , "")) * marca.taxa  as diaria')
+        return self::orderBy('cliente.updated_at')
+            ->selectRaw('cliente.*, CONCAT(cliente.rua, ", ", cliente.numero, ", ", cliente.bairro, " ", cliente.cidade, "-",cliente.estado, " ", cliente.cep) as endereco')
             ->get();
     }
 }

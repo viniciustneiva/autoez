@@ -59,7 +59,10 @@ class Veiculo extends Model
     }
 
     public static function emprestarVeiculo($id) {
-       if(Veiculo::where('id', $id)->where('disponivel', 1)->update(['disponivel' => 0])) {
+        $veiculo = Veiculo::where('id', $id)->where('disponivel', 1)->first();
+       if($veiculo) {
+           $veiculo->disponivel = 0;
+           $veiculo->save();
            return true;
        }
 
@@ -67,7 +70,10 @@ class Veiculo extends Model
     }
 
     public static function devolverVeiculo($id) {
-        if(Veiculo::where('id', $id)->where('disponivel', 0)->update(['disponivel' => 1])) {
+        $veiculo = Veiculo::where('id', $id)->where('disponivel', 0)->first();
+        if($veiculo) {
+            $veiculo->disponivel = 1;
+            $veiculo->save();
             return true;
         }
         return false;

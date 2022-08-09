@@ -40,6 +40,7 @@ class Aluguel extends Model
             ->join('users', 'users.id', '=', 'aluguel.funcionario_id')
             ->join('marca', 'marca.id', '=', 'veiculo.marca_id')
             ->with('funcionario', 'cliente', 'veiculo')
+            ->orderBy('aluguel.updated_at', 'desc')
             ->selectRaw('aluguel.*, marca.name as marca_carro,
              ROUND(CONVERT(REPLACE(REPLACE(veiculo.valor, "R$", ""), ".", ""), DECIMAL),2) as valor_extenso,
               DATEDIFF(aluguel.data_entrega, aluguel.data_emprestimo) as dias_utilizados,
@@ -71,7 +72,6 @@ class Aluguel extends Model
             ->join('marca', 'marca.id', '=', 'veiculo.marca_id')
             ->with('funcionario', 'cliente', 'veiculo')
             ->orderBy('created_at')
-            ->with('funcionario', 'cliente', 'veiculo')
             ->selectRaw('aluguel.*, marca.name as marca_carro,
              ROUND(CONVERT(REPLACE(REPLACE(veiculo.valor, "R$", ""), ".", ""), DECIMAL),2) as valor_extenso,
               DATEDIFF(aluguel.data_entrega, aluguel.data_emprestimo) as dias_utilizados,

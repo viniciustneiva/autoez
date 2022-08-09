@@ -67,6 +67,8 @@
 
     $(function(){
         $('#valor').maskMoney({prefix:'R$ ', allowNegative: false, thousands:'.', decimal:',', affixesStay: true});
+        //$('.td_valor').maskMoney({prefix:'R$ ', allowNegative: false, thousands:'.', decimal:',', affixesStay: true});
+
     })
 
     $(".close.btn").click(function (e) {

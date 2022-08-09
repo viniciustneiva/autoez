@@ -61,7 +61,9 @@
                                                     <h3 class="text-center">Ações</h3>
                                                     <div class="d-flex justify-content-center align-items-center  position-relative">
                                                         <a href={{ route('editarAluguel') . '/' . $a->id }}><div class="btn btn-outline-info botao-editar m-1"><i class="fa-solid fa-pen-to-square"></i></div></a>
+                                                        @if(\App\Models\TipoFuncionario::ehGerente())
                                                             <div class="btn btn-outline-danger botao-excluir m-1" usuario="{{$a->id}}" ><i class="fa-solid fa-trash"></i></div>
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>
@@ -161,15 +163,21 @@
 
                                 r.entregue = r.entregue ? 'Sim' : 'Não';
                                 r.data_entrega = r.data_entrega ? r.data_entrega.split('-').reverse().join('/') : ' ';
-                                r.dias_utilizados = r.dias_utilizados ? r.dias_utilizados : '0'
+                                r.dias_utilizados = r.dias_utilizados ? r.dias_utilizados : '0';
+                                let htmlDeletar = '';
+                                @if(\App\Models\TipoFuncionario::ehGerente())
+                                    htmlDeletar = '<div class="btn btn-outline-danger botao-excluir m-1" usuario="'+r.id+'" ><i class="fa-solid fa-trash"></i></div>';
+
+                                @endif
+
 
                                 let novoHtml = '<div class="card d-flex my-2 flex-row justify-content-between pe-1">\
                                     <div class="rounded-0  p-2  d-flex justify-content-start flex-column col-lg-12">\
                                     <div class="d-flex card p-2" style="background: #f2f2f2">\
                                     <div class="d-flex flex-row col-lg-12">\
                                     <div class="d-flex ps-0 ms-0 p-2 m-2 flex-row col-lg-9">\
-                                    <div class="d-flex card m-2 p-2 flex-column col-lg-6">\
-                                    <h4 class=" mb-1 mx-2" style="background: #f3d3d3">Aluguel</h4>\
+                                    <div class="d-flex card m-2 p-2 flex-column col-lg-6"  style="background: #f3d3d3">\
+                                    <h4 class=" mb-1 mx-2">Aluguel</h4>\
                                 <p class=" mb-1 mx-2">Data do empréstimo: '+r.data_emprestimo.split('-').reverse().join('/')+'</p>\
                                 <p class=" mb-1 mx-2">Prazo máximo: '+r.prazo.split('-').reverse().join('/')+'</p>\
                                 <p class=" mb-1 mx-2">Entregue: '+r.entregue +'</p>\
@@ -186,7 +194,7 @@
                                 <h4 style="text-align: center" " >Ações<h4>\
                                     <div class="d-flex justify-content-center align-items-center position-relative">\
                                         <a href="/aluguel/editar/'+ r.id +'"><div class="btn btn-outline-info botao-editar m-1"><i class="fa-solid fa-pen-to-square"></i></div></a>\
-                                        <div class="btn btn-outline-danger botao-excluir m-1" usuario="'+r.id+'" ><i class="fa-solid fa-trash"></i></div>\
+                                        +htmlDeletar+\
                                     </div>\
                                 </div>\
                             </div>\

@@ -8,6 +8,7 @@
                 <div class="card-body">
                     <form action="{{ $edicao ? route('saveEditAluguel') : route('saveCreateAluguel')}}" method="post" class="form-control form p-3">
                         @csrf
+
                         @if($aluguel != null)
                             <input type="hidden" id="id" name="id" value="{{ optional($aluguel)->id }}" readonly>
                         @endif
@@ -15,8 +16,11 @@
                         <div class="d-flex col-lg-12 mb-2">
                             <div class="form-group col-md-6 px-2">
                                 <label for="cliente_id" class="form-label mb-0">Cliente</label>
-                                {!! Form::select('cliente_id', ['' => 'Selecionar Cliente'] + \App\Models\Cliente::getClientes(), optional($aluguel)->cliente_id, ['id' => 'cliente_id', 'class' => 'form-select gui-input', 'required', (optional($aluguel)->entregue) ? 'disabled' : '']) !!}
 
+                                {!! Form::select('cliente_id', ['' => 'Selecionar Cliente'] + \App\Models\Cliente::getClientes(), optional($aluguel)->cliente_id, ['id' => 'cliente_id', 'class' => 'form-select gui-input', 'required', ($edicao) ? 'disabled' : '']) !!}
+                                @if($edicao)
+                                    <input type="hidden" name="cliente_id" value="{{optional($aluguel)->cliente_id}}">
+                                @endif
 {{--                                <input type="text" class="form-control form-text mt-1" maxlength="7" placeholder="Placa" id="placa" name="placa" value="{{ optional($aluguel)->placa }}" required>--}}
                             </div>
                             <div class="form-group col-md-6 px-2">
@@ -37,34 +41,34 @@
                         <div class="d-flex col-lg-12 mb-2">
                             <div class="form-group col-md-6 px-2">
                                 <label for="data_emprestimo" class="form-label mb-0">Data do Empréstimo</label>
-                                <input type="date" class="form-control form-text mt-1" id="data_emprestimo" placeholder="Modelo" name="data_emprestimo" value="{{ optional($aluguel)->data_emprestimo }}" required {{(optional($aluguel)->entregue) ? 'readonly' : ''}}>
+                                <input type="date" class="form-control form-text mt-1" id="data_emprestimo" placeholder="Modelo" name="data_emprestimo" value="{{ optional($aluguel)->data_emprestimo }}" required {{($edicao ? 'readonly' : '')}}>
                             </div>
 
                             <div class="form-group col-md-6 px-2">
                                 <label for="prazo" class="form-label mb-0">Prazo limite de Entrega</label>
-                                <input type="date" class="form-control form-text mt-1 " id="prazo"  name="prazo" value="{{ optional($aluguel)->prazo }}" required {{(optional($aluguel)->entregue) ? 'readonly' : ''}}>
+                                <input type="date" class="form-control form-text mt-1 " id="prazo"  name="prazo" value="{{ optional($aluguel)->prazo }}" required {{(optional($aluguel)->entregue ? 'readonly' : '')}}>
                             </div>
 
                         </div>
                         @if($edicao)
                             <div class="d-flex col-lg-12 mb-2">
-{{--                                <div class="form-group col-md-6 px-2">--}}
-{{--                                    <label for="data_entrega" class="form-label mb-0">Data Entrega</label>--}}
-                                    <input type="hidden" id="data_entrega" {{(optional($aluguel)->data_entrega) ? 'readonly' : ''}}  name="data_entrega" value="{{ (optional($aluguel)->data_entrega) }}"  class="data_entrega" >
+
+                                <input type="hidden" id="data_entrega" name="data_entrega" value="{{ (optional($aluguel)->data_entrega!=null ? optional($aluguel)->data_entrega : '' ) }}"  class="data_entrega" >
 {{--                                </div>--}}
                                 <div class="form-group col-md-6 px-2">
                                     <div class="d-flex flex-column">
                                         <label for="valor" class="form-label form-check-label mb-0">Entregue</label>
-                                        <select class="form-select gui-input" name="entregue" id="entregue" {{(optional($aluguel)->entregue) ? 'disabled' : 'required'}}>
+                                        <select class="form-select gui-input" name="entregue" id="entregue" {{(optional($aluguel)->entregue  && optional($aluguel)->entregue== 1) ? 'disabled' : 'required'}}>
                                             <option value="0">Não</option>
-                                            <option {{(optional($aluguel)->entregue) ? 'selected' : ''}} value="1">Sim</option>
+                                            <option {{(optional($aluguel)->entregue == 1 ? 'selected' : '')}} value="1">Sim</option>
                                         </select>
-{{--                                        <input type="checkbox" id="entregue" class="form-check form-check-input" name="entregue" value="1" {{(optional($aluguel)->entregue == 1) ? ' checked disabled' : ''}}>--}}
+{{----}}
                                     </div>
 
-{{--                                    <input type="text" class="form-control form-text mt-1" id="valor" placeholder="R$ 0,00"  name="valor" value="{{ optional($aluguel)->valor }}" required>--}}
+{{----}}
                                 </div>
                             </div>
+                        @else
 
                         @endif
 
@@ -89,28 +93,36 @@
     <script>
         $(document).ready(function (){
 
+            @if(!$edicao)
+                const x = new Date($('#data_emprestimo').val());
+                $("#prazo").blur(function () {
+                    const y = new Date($('#prazo').val());
+                    if(x >= y){
+                        $('#prazo').val('');
+                    }
+                })
 
-            const x = new Date($('#data_emprestimo').val());
-            $("#prazo").blur(function () {
-                const y = new Date($('#prazo').val());
-                if(x >= y){
-                    $('#prazo').val('');
-                }
-            })
+                $("#data_entrega").blur(function () {
 
-            $("#data_entrega").blur(function () {
+                    const y = new Date($('#data_entrega').val());
+                    if(x >= y){
+                        $('#data_entrega').val('');
+                    }
+                })
+            @else
+                $("#entregue").change(function () {
+                    let v_OptionSelected = $(this).find("option:selected");
+                    if(v_OptionSelected.val() == 1) {
 
-                const y = new Date($('#data_entrega').val());
-                if(x >= y){
-                    $('#data_entrega').val('');
-                }
-            })
+                        let dia = new Date().toLocaleString("pt-BR", {timeZone: "America/Sao_Paulo"})
 
-            if($('#entregue option[value="1"]').attr("selected", "selected")) {
-                let dia = new Date().toLocaleString("pt-BR", {timeZone: "America/Sao_Paulo"})
+                        $('#data_entrega').val(dia.split(' ')[0].split('/').reverse().join('-'))
+                    }
+                });
 
-                console.log($('#data_entrega').val(dia.split(' ')[0].split('/').reverse().join('-')))
-            }
+            @endif
+
+
 
         });
     </script>

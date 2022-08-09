@@ -38,13 +38,13 @@
                     <th scope="row">{{$loop->iteration}}</th>
                     <td>{{$al->cliente->name}}</td>
                     <td>{{$al->veiculo->placa}}</td>
-                    <td>R${{ceil($al->diaria/10)}}</td>
+                    <td class="td_valor">R${{ceil($al->diaria/10)}}</td>
                     <td>{{$al->funcionario->name}}</td>
                     <td>{{date('d/m/Y', strtotime($al->data_emprestimo))}}</td>
                     <td>{{date('d/m/Y', strtotime($al->prazo))}}</td>
                     <td>{{($al->entregue) ? 'Sim' : "Não"}}</td>
                     <td>{{($al->data_entrega!=null) ? date('d/m/Y', strtotime($al->data_entrega)) : '-'}}</td>
-                    <td style="text-align: center">{{ ($al->dias_utilizados * ceil($al->diaria/10))!=0 ? 'R$ ' . ($al->dias_utilizados * ceil($al->diaria/10)) .',00' : '' }}</td>
+                    <td class="td_valor" style="text-align: center">{{ ($al->dias_utilizados * ceil($al->diaria/10))!=0 ? 'R$ ' . ($al->dias_utilizados * ceil($al->diaria/10)) .',00' : 'R$ '.ceil($al->diaria/10).',00' }}</td>
                 </tr>
                 <script>
                     total += {{($al->dias_utilizados * ceil($al->diaria/10))}};
