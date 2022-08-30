@@ -280,7 +280,4 @@ class UserTest extends TestCase
         $this->assertFalse($marca2->id != $marca->id);
     }
 
-
-
-
 }

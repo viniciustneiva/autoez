@@ -2,20 +2,18 @@
 
 namespace Tests\Unit;
 
-use App\Models\Marca;
-use App\Models\User;
-use Illuminate\Support\Str;
+use App\Models\Cliente;
 use PHPUnit\Framework\TestCase;
 
-class UserTest extends TestCase
+class ClienteTest extends TestCase
 {
     /**
      * A basic unit test example.
      *
      * @return void
      */
-    public function test_if_user_columns_is_correct() {
-        $user = new User;
+    public function test_if_aluguel_columns_is_correct() {
+        $cliente = new Cliente;
 
         $expected = [
             'email',
@@ -30,14 +28,10 @@ class UserTest extends TestCase
             'estado',
             'telefone',
             'data_nascimento',
-            'password',
-            'tipo'
         ];
 
-        $arrayComp = array_diff($expected, $user->getFillable());
+        $arrayComp = array_diff($expected, $cliente->getFillable());
 
         $this->assertCount(0, $arrayComp);
-
     }
-
 }

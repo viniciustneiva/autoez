@@ -12,6 +12,5 @@ abstract class TestCase extends BaseTestCase
     {
         parent::setUp();
 
-        // Do your extra thing here
     }
 }

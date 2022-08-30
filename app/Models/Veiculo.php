@@ -21,7 +21,6 @@ class Veiculo extends Model
         'cor',
         'ano',
         'valor',
-
         'disponivel',
     ];
 

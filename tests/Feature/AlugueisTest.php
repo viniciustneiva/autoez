@@ -41,6 +41,8 @@ class AlugueisTest extends TestCase
 
         $aluguel2 = Aluguel::getAluguel($id);
 
+        $this->assertIsInt($id);
+
         $this->assertEquals($aluguel2->id, $aluguel->id);
 
         $this->assertFalse($aluguel2->id !== $aluguel->id);
@@ -65,7 +67,7 @@ class AlugueisTest extends TestCase
 
     }
 
-    public function test_gerar_relatorio_veiculo() {
+    public function test_gerar_relatorio_aluguel() {
         if(Marca::count() > 0 && Aluguel::count() > 0 && Cliente::count() > 0){
             $relatorio = Aluguel::gerarRelatorio();
             $this->assertIsObject($relatorio);
@@ -106,4 +108,5 @@ class AlugueisTest extends TestCase
         }
 
     }
+
 }

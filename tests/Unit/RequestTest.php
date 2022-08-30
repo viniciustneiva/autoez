@@ -102,6 +102,7 @@ class RequestTest extends TestCase
         $request = new StoreAluguelRequest();
 
         $this->assertIsArray($request->rules());
+        $this->assertNotNull($request->rules());
     }
 
     public function test_always_authorize_edit_aluguel_request()
@@ -110,6 +111,7 @@ class RequestTest extends TestCase
         $request = new EditAluguelRequest();
 
         $this->assertTrue($request->authorize());
+        $this->assertNotNull($request->rules());
     }
 
     public function test_rules_from_edit_aluguel_request()
@@ -118,6 +120,7 @@ class RequestTest extends TestCase
         $request = new EditAluguelRequest();
 
         $this->assertIsArray($request->rules());
+        $this->assertNotNull($request->rules());
     }
 
     public function test_always_authorize_edit_veiculo_request()
@@ -126,6 +129,7 @@ class RequestTest extends TestCase
         $request = new EditVeiculoRequest();
 
         $this->assertTrue($request->authorize());
+        $this->assertNotNull($request->rules());
     }
 
     public function test_rules_from_edit_veiculo_request()
@@ -134,6 +138,7 @@ class RequestTest extends TestCase
         $request = new EditVeiculoRequest();
 
         $this->assertIsArray($request->rules());
+        $this->assertNotNull($request->rules());
     }
 
     public function test_always_authorize_edit_marca_request()
@@ -142,6 +147,7 @@ class RequestTest extends TestCase
         $request = new EditMarcaRequest();
 
         $this->assertTrue($request->authorize());
+        $this->assertNotNull($request->rules());
     }
 
     public function test_rules_from_edit_marca_request()
@@ -150,6 +156,7 @@ class RequestTest extends TestCase
         $request = new EditMarcaRequest();
 
         $this->assertIsArray($request->rules());
+        $this->assertNotNull($request->rules());
     }
 
     public function test_always_authorize_edit_funcionario_request()
@@ -158,6 +165,7 @@ class RequestTest extends TestCase
         $request = new EditFuncionarioRequest();
 
         $this->assertTrue($request->authorize());
+        $this->assertNotNull($request->rules());
     }
 
     public function test_rules_from_edit_funcionario_request()
@@ -166,6 +174,7 @@ class RequestTest extends TestCase
         $request = new EditFuncionarioRequest();
 
         $this->assertIsArray($request->rules());
+        $this->assertNotNull($request->rules());
     }
 
     public function test_always_authorize_edit_cliente_request()
@@ -174,6 +183,7 @@ class RequestTest extends TestCase
         $request = new EditClienteRequest();
 
         $this->assertTrue($request->authorize());
+        $this->assertNotNull($request->rules());
     }
 
     public function test_rules_from_edit_cliente_request()
@@ -182,6 +192,7 @@ class RequestTest extends TestCase
         $request = new EditClienteRequest();
 
         $this->assertIsArray($request->rules());
+        $this->assertNotNull($request->rules());
     }
 
 
