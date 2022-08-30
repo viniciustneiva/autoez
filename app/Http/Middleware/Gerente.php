@@ -21,6 +21,6 @@ class Gerente
             return $next($request);
         }
 
-        return redirect('/');
+        return redirect('/login');
     }
 }

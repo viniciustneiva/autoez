@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Aluguel;
 use App\Models\Cliente;
 use App\Models\Gerente;
 use App\Models\TipoFuncionario;
@@ -148,12 +149,20 @@ class GerenteController extends Controller {
     }
 
     public function gerarRelatorioCliente() {
-        return view('admin.relatorio.listarCliente', ['clientes' => Cliente::gerarRelatorio()]);
+        if(TipoFuncionario::ehGerente()){
+            return view('admin.relatorio.listarCliente', ['clientes' => Cliente::gerarRelatorio()]);
+        }
+        return response('', 403);
     }
 
     public function gerarRelatorioVeiculo() {
         return view('admin.relatorio.listarVeiculo', ['veiculos' => Veiculo::gerarRelatorioVeiculo()]);
     }
 
+    public function gerarRelatorioAluguel() {
+        $alugueis = Aluguel::gerarRelatorio();
+
+        return view('admin.relatorio.listarAluguel', ['listaAlugueis' => $alugueis]);
+    }
 
 }

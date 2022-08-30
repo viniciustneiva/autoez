@@ -52,6 +52,7 @@ Auth::routes();
         Route::get('/deletar-cliente/{id}', 'deletarCliente')->name('deletarCliente');
         Route::get('/relatorio-cliente', 'gerarRelatorioCliente')->name('gerarRelatorioCliente');
         Route::get('/relatorio-veiculo', 'gerarRelatorioVeiculo')->name('gerarRelatorioVeiculo');
+        Route::get('/relatorio-aluguel', 'gerarRelatorioAluguel')->name('gerarRelatorioAluguel');
     });
 
     Route::controller(VeiculoController::class)->group(function () {
@@ -82,7 +83,7 @@ Auth::routes();
         Route::post('/buscar-aluguel', 'buscarAluguel')->name('buscarAluguel');
         Route::post('/buscar-aluguel-completo', 'buscarAluguelLike')->name('buscarAluguelLike');
         Route::get('/deletar-aluguel/{id}', 'deletarAluguel')->name('deletarAluguel');
-        Route::get('/relatorio-aluguel', 'gerarRelatorioAluguel')->name('gerarRelatorioAluguel');
+
     });
 
 

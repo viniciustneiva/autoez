@@ -32,7 +32,6 @@ class HomeController extends Controller
         if($request->validate(['cep' => 'required|max:9'])){
             return response()->json($brasilApi->cep($request->cep));
         }
-
     }
 
 }

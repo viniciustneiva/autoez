@@ -32,7 +32,7 @@ class Marca extends Model {
     public static function deletarMarca($id) {
         $marca = Marca::find($id);
 
-        if($marca && Auth::user()->tipo == TipoFuncionario::$Gerente){ // impedir que o gerente se delete
+        if($marca && TipoFuncionario::ehGerente()){ // impedir que o gerente se delete
             try {
                 $marca->delete();
                 return redirect(route('listarMarcas'))->with('success', 'Marca removida com sucesso!');

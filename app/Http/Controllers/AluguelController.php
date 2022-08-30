@@ -18,7 +18,6 @@ class AluguelController extends Controller
 
     public function listarAlugueis() {
         $alugueis = Aluguel::listarAlugueis();
-
         return view('admin.aluguel.listar', ['alugueis' => $alugueis]);
     }
 
@@ -103,10 +102,6 @@ class AluguelController extends Controller
         return null;
     }
 
-    public function gerarRelatorioAluguel() {
-        $alugueis = Aluguel::gerarRelatorio();
 
-        return view('admin.relatorio.listarAluguel', ['listaAlugueis' => $alugueis]);
-    }
 
 }

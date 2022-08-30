@@ -39,7 +39,7 @@ class Veiculo extends Model
             ->first();
     }
 
-    public static function getVeiculos() {
+    public static function getVeiculos(): array {
         return self::join('marca', 'marca.id', '=', 'veiculo.marca_id')
             ->selectRaw("veiculo.id, CONCAT(marca.name, ' - ', veiculo.modelo,' - ', veiculo.placa) as nomeVeiculo")
             ->orderBy('veiculo.placa')

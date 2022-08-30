@@ -6,11 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 
-class Aluguel extends Model
-{
-    use HasFactory;
+class Aluguel extends Model {
+    use HasFactory; // T R A I T
 
-    protected $table = "aluguel";
+    protected $table = "aluguel"; // nome da tabela
 
     protected $fillable = [
         'cliente_id',

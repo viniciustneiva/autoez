@@ -26,9 +26,9 @@ class DatabaseSeeder extends Seeder
             EstadosSeeder::class,
         ]);
 
-        User::factory()->count(100)->create();
-        Cliente::factory()->count(100)->create();
-        Veiculo::factory()->count(100)->create();
-        Aluguel::factory()->count(100)->create();
+        User::factory()->count(1)->create();
+        Cliente::factory()->count(1)->create();
+        Veiculo::factory()->count(1)->create();
+        Aluguel::factory()->count(1)->create();
     }
 }

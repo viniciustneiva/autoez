@@ -24,7 +24,4 @@ class TipoFuncionario extends Model
         return Auth::check() && Auth::user()->tipo == self::$Funcionario;
     }
 
-    public function users() {
-        return $this->hasMany(User::class);
-    }
 }

@@ -37,6 +37,7 @@ class VeiculoController extends Controller {
             'ano' => $request->ano,
             'valor' => $request->valor
         ]);
+
         return redirect()->route('listarVeiculos')->with('success', 'Operação realizada com sucesso!');
     }
 

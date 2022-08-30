@@ -9,6 +9,10 @@ use Illuminate\Http\Request;
 
 class ClienteController extends Controller
 {
+    public function __construct() {
+        $this->middleware('auth');
+    }
+
     public function listarClientes(){
         $clientes = Cliente::listarClientes();
         return view('admin.cliente.listar', ['clientes' => $clientes]);
